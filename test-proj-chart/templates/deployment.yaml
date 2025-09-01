@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: test-python-app
+    labels:
+        app: basic-app
+        env: dev-nkit
+        role: backend
+spec:
+    replicas: {{ .Values.replicaCount }}
+    selector:
+      matchLabels:
+        app: basic-app
+    template:
+      metadata:
+        labels:
+          app: basic-app
+      spec:
+          containers:
+              - name: basic-python-app
+                image: {{ .Values.image.repository }}
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 8000
